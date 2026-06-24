@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Dna, Database, Leaf, Brain, Orbit, Sparkles, HelpCircle, 
   Trophy, GitMerge, Zap, BellRing, ChevronRight, RefreshCw, X, Play, Clock,
-  Infinity as InfinityIcon, Lock
+  InfinityIcon, Lock
 } from 'lucide-react';
 
 import { GameState, EraId, ActiveEvent, GameEvent } from './types';
