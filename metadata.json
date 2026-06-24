@@ -1,0 +1,6 @@
+{
+  "name": "Microverse: From Cell to Cosmos",
+  "description": "Um jogo idle incremental sobre a evolução da vida, desde uma única bactéria até uma civilização galáctica viva.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
