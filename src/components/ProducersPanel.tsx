@@ -104,7 +104,7 @@ export function ProducersPanel({ state, onBuyProducer }: ProducersPanelProps) {
       </div>
 
       {/* Producers List */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+      <div className="grid grid-cols-1 gap-3">
         {eraProducers.map((p) => {
           const currentCount = state.producers[p.id] || 0;
           const { cost, quantity, canAfford } = getPurchaseDetails(p);
@@ -140,10 +140,10 @@ export function ProducersPanel({ state, onBuyProducer }: ProducersPanelProps) {
             <motion.div
               key={p.id}
               whileHover={{ scale: 1.01 }}
-              className={`bg-slate-950/70 border rounded-xl p-4 flex flex-col justify-between transition-all duration-300 shadow-md ${
+              className={`border rounded-xl p-4 flex flex-col justify-between transition-all duration-300 shadow-sm ${
                 canAfford 
-                  ? 'border-slate-800 hover:border-slate-700' 
-                  : 'border-slate-900/40'
+                  ? 'bg-slate-900/40 border-slate-800 hover:border-emerald-500/30 hover:bg-slate-900/60 shadow-[0_4px_20px_rgba(16,185,129,0.02)]' 
+                  : 'bg-slate-950/50 border-slate-900/50 opacity-90'
               }`}
             >
               {/* Producer Top Info */}

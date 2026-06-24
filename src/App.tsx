@@ -41,7 +41,7 @@ import { HelpModal } from './components/HelpModal';
 
 export default function App() {
   const [state, setState] = useState<GameState>(getDefaultGameState());
-  const [activeTab, setActiveTab] = useState<'main' | 'producers' | 'upgrades' | 'tech' | 'prestige' | 'stats' | 'events'>('main');
+  const [activeTab, setActiveTab] = useState<'main' | 'tech' | 'prestige' | 'stats_events'>('main');
   
   // Modals & Overlay triggers
   const [helpOpen, setHelpOpen] = useState(false);
@@ -595,66 +595,115 @@ export default function App() {
     switch (activeTab) {
       case 'main':
         return (
-          <MainGamePanel 
-            state={state}
-            onClickMain={handleMainClick}
-            activeEventId={activeEvent?.event.id}
-            onSave={saveGame}
-            showSaveIndicator={showSaveIndicator}
-          />
-        );
-      case 'producers':
-        return (
-          <ProducersPanel 
-            state={state}
-            onBuyProducer={handleBuyProducer}
-          />
-        );
-      case 'upgrades':
-        return (
-          <UpgradesPanel 
-            state={state}
-            onBuyUpgrade={handleBuyUpgrade}
-          />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 h-full lg:overflow-hidden pb-4 lg:pb-0">
+            {/* Left: Main Clicker Orb */}
+            <div className="lg:col-span-4 h-full flex flex-col bg-slate-900/10 border border-slate-900/40 rounded-2xl p-4 lg:overflow-y-auto scrollbar-thin">
+              <MainGamePanel 
+                state={state}
+                onClickMain={handleMainClick}
+                activeEventId={activeEvent?.event.id}
+                onSave={saveGame}
+                showSaveIndicator={showSaveIndicator}
+              />
+            </div>
+
+            {/* Middle: Active Colonies (Producers) */}
+            <div className="lg:col-span-4 h-full flex flex-col bg-slate-900/10 border border-slate-900/40 rounded-2xl p-4 lg:overflow-y-auto scrollbar-thin">
+              <div className="border-b border-slate-900 pb-3 mb-3 shrink-0">
+                <h3 className="text-sm font-bold text-white tracking-wide uppercase font-mono flex items-center gap-1.5">
+                  <Database size={16} className="text-cyan-400" />
+                  Colônias Ativas
+                </h3>
+              </div>
+              <div className="flex-1 lg:overflow-y-auto pr-1 scrollbar-thin">
+                <ProducersPanel 
+                  state={state}
+                  onBuyProducer={handleBuyProducer}
+                />
+              </div>
+            </div>
+
+            {/* Right: Synthesis Upgrades */}
+            <div className="lg:col-span-4 h-full flex flex-col bg-slate-900/10 border border-slate-900/40 rounded-2xl p-4 lg:overflow-y-auto scrollbar-thin">
+              <div className="border-b border-slate-900 pb-3 mb-3 shrink-0">
+                <h3 className="text-sm font-bold text-white tracking-wide uppercase font-mono flex items-center gap-1.5">
+                  <Zap size={16} className="text-amber-400" />
+                  Sintetizar Upgrades
+                </h3>
+              </div>
+              <div className="flex-1 lg:overflow-y-auto pr-1 scrollbar-thin">
+                <UpgradesPanel 
+                  state={state}
+                  onBuyUpgrade={handleBuyUpgrade}
+                />
+              </div>
+            </div>
+          </div>
         );
       case 'tech':
         return (
-          <TechTreePanel 
-            state={state}
-            onUnlockTech={handleUnlockTech}
-          />
+          <div className="h-full bg-slate-900/10 border border-slate-900/40 rounded-2xl p-4 lg:overflow-y-auto scrollbar-thin pb-4 lg:pb-0">
+            <TechTreePanel 
+              state={state}
+              onUnlockTech={handleUnlockTech}
+            />
+          </div>
         );
       case 'prestige':
         return (
-          <PrestigePanel 
-            state={state}
-            onPrestige={handlePrestige}
-            onBuyPermanentUpgrade={handleBuyPermanentUpgrade}
-          />
+          <div className="h-full bg-slate-900/10 border border-slate-900/40 rounded-2xl p-4 lg:overflow-y-auto scrollbar-thin pb-4 lg:pb-0">
+            <PrestigePanel 
+              state={state}
+              onPrestige={handlePrestige}
+              onBuyPermanentUpgrade={handleBuyPermanentUpgrade}
+            />
+          </div>
         );
-      case 'stats':
+      case 'stats_events':
         return (
-          <StatsPanel state={state} />
-        );
-      case 'events':
-        return (
-          <EventsPanel 
-            activeEvent={activeEvent}
-            notificationLog={notificationLog}
-          />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full lg:overflow-hidden pb-4 lg:pb-0">
+            {/* Left: Stats */}
+            <div className="h-full flex flex-col bg-slate-900/10 border border-slate-900/40 rounded-2xl p-4 lg:overflow-y-auto scrollbar-thin">
+              <div className="border-b border-slate-900 pb-3 mb-3 shrink-0">
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2">
+                  <Trophy size={16} className="text-amber-400" />
+                  Métricas e Estatísticas
+                </h3>
+              </div>
+              <div className="flex-1 lg:overflow-y-auto pr-1 scrollbar-thin">
+                <StatsPanel state={state} />
+              </div>
+            </div>
+
+            {/* Right: Events */}
+            <div className="h-full flex flex-col bg-slate-900/10 border border-slate-900/40 rounded-2xl p-4 lg:overflow-y-auto scrollbar-thin">
+              <div className="border-b border-slate-900 pb-3 mb-3 shrink-0">
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2">
+                  <BellRing size={16} className="text-pink-400" />
+                  Eventos e Fenômenos
+                </h3>
+              </div>
+              <div className="flex-1 lg:overflow-y-auto pr-1 scrollbar-thin">
+                <EventsPanel 
+                  activeEvent={activeEvent}
+                  notificationLog={notificationLog}
+                />
+              </div>
+            </div>
+          </div>
         );
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex flex-col font-sans selection:bg-emerald-500/30 overflow-x-hidden">
+    <div className="h-screen max-h-screen bg-slate-950 text-white flex flex-col font-sans selection:bg-emerald-500/30 overflow-hidden select-none relative">
       
       {/* BACKGROUND PARTICLES AMBIENT EFFECT */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(16,185,129,0.06),rgba(255,255,255,0))] pointer-events-none -z-20" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_100%,rgba(6,182,212,0.04),rgba(255,255,255,0))] pointer-events-none -z-20" />
 
       {/* HEADER HUD BAR */}
-      <header className="w-full bg-slate-950/80 border-b border-slate-900 sticky top-0 z-30 backdrop-blur-md px-4 py-3 md:px-8">
+      <header className="w-full bg-slate-950/80 border-b border-slate-900/60 shrink-0 backdrop-blur-md px-4 py-3 md:px-8">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           
           <div className="flex items-center gap-2.5">
@@ -672,7 +721,7 @@ export default function App() {
 
           <div className="flex items-center gap-3">
             {/* Quick Stats Summary */}
-            <div className="hidden lg:flex items-center gap-4 border-r border-slate-900 pr-4">
+            <div className="hidden lg:flex items-center gap-4 border-r border-slate-900/50 pr-4">
               <div className="text-right font-mono">
                 <span className="text-[9px] text-slate-500 block uppercase">Gens Ativos</span>
                 <span className="text-xs font-bold text-emerald-400">🧬 {formatNumber(state.gensEvolutivos)}</span>
@@ -687,7 +736,7 @@ export default function App() {
 
             <button 
               onClick={() => setHelpOpen(true)}
-              className="p-2 rounded-lg border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-900/50 cursor-pointer transition-all flex items-center gap-1 text-xs font-mono font-medium"
+              className="p-2 rounded-lg border border-slate-850 text-slate-400 hover:text-white hover:bg-slate-900/50 cursor-pointer transition-all flex items-center gap-1 text-xs font-mono font-medium"
               id="btn-help-modal-trigger"
             >
               <HelpCircle size={15} />
@@ -699,7 +748,7 @@ export default function App() {
       </header>
 
       {/* HORIZONTAL SCROLLER FOR UNLOCKED ERAS */}
-      <div className="w-full bg-slate-950/60 border-b border-slate-900/60 py-2.5 px-4 overflow-x-auto scrollbar-none flex gap-2 justify-start md:justify-center">
+      <div className="w-full bg-slate-950/60 border-b border-slate-900/40 py-2 shrink-0 px-4 overflow-x-auto scrollbar-none flex gap-2 justify-start md:justify-center">
         {ERAS.map((e) => {
           const isUnlocked = state.unlockedEras.includes(e.id);
           const isActive = state.currentEra === e.id;
@@ -708,7 +757,7 @@ export default function App() {
             return (
               <div 
                 key={e.id}
-                className="px-3.5 py-1.5 rounded-lg bg-slate-950 border border-slate-950 opacity-25 text-xs font-mono select-none shrink-0 flex items-center gap-1.5 cursor-not-allowed"
+                className="px-3.5 py-1.5 rounded-lg bg-slate-950 border border-slate-900/40 opacity-25 text-xs font-mono select-none shrink-0 flex items-center gap-1.5 cursor-not-allowed"
               >
                 <Lock size={12} />
                 Era Oculta
@@ -723,7 +772,7 @@ export default function App() {
               className={`px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all flex items-center gap-1.5 shrink-0 cursor-pointer border ${
                 isActive
                   ? 'bg-emerald-950/20 text-emerald-400 border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.05)]'
-                  : 'bg-slate-900/40 text-slate-400 border-slate-900 hover:text-slate-200 hover:bg-slate-900/70'
+                  : 'bg-slate-900/40 text-slate-400 border-slate-900/60 hover:text-slate-200 hover:bg-slate-900/70'
               }`}
             >
               <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-emerald-400 animate-ping' : 'bg-slate-600'}`} />
@@ -734,10 +783,10 @@ export default function App() {
       </div>
 
       {/* CORE LAYOUT BOX */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-6 md:py-8 flex flex-col lg:flex-row gap-6">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-4 flex flex-col lg:flex-row gap-5 min-h-0 overflow-y-auto lg:overflow-hidden">
         
         {/* SIDE BAR / TAB MENU (Responsive) */}
-        <nav className="w-full lg:w-60 flex lg:flex-col gap-1.5 shrink-0 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 scrollbar-none border-b lg:border-b-0 lg:border-r border-slate-900/60 lg:pr-4">
+        <nav className="w-full lg:w-52 flex lg:flex-col gap-1.5 shrink-0 overflow-x-auto lg:overflow-y-auto pb-2 lg:pb-0 scrollbar-none border-b lg:border-b-0 lg:border-r border-slate-900/40 lg:pr-4 h-auto lg:h-full">
           
           <button
             onClick={() => setActiveTab('main')}
@@ -750,36 +799,6 @@ export default function App() {
             <span className="flex items-center gap-2">
               <Clock size={15} />
               Setor Central
-            </span>
-            <ChevronRight size={14} className="hidden lg:inline opacity-60" />
-          </button>
-
-          <button
-            onClick={() => setActiveTab('producers')}
-            className={`w-full py-2.5 px-3.5 rounded-xl text-xs font-bold tracking-wide transition-all flex items-center justify-between cursor-pointer shrink-0 lg:shrink border ${
-              activeTab === 'producers'
-                ? 'bg-cyan-950/20 text-cyan-400 border-cyan-500/20 font-black'
-                : 'bg-slate-900/10 text-slate-400 border-transparent hover:text-slate-200 hover:bg-slate-900/30'
-            }`}
-          >
-            <span className="flex items-center gap-2">
-              <Database size={15} />
-              Colônias Ativas
-            </span>
-            <ChevronRight size={14} className="hidden lg:inline opacity-60" />
-          </button>
-
-          <button
-            onClick={() => setActiveTab('upgrades')}
-            className={`w-full py-2.5 px-3.5 rounded-xl text-xs font-bold tracking-wide transition-all flex items-center justify-between cursor-pointer shrink-0 lg:shrink border ${
-              activeTab === 'upgrades'
-                ? 'bg-teal-950/20 text-teal-400 border-teal-500/20 font-black'
-                : 'bg-slate-900/10 text-slate-400 border-transparent hover:text-slate-200 hover:bg-slate-900/30'
-            }`}
-          >
-            <span className="flex items-center gap-2">
-              <Zap size={15} />
-              Sintetizar Upgrades
             </span>
             <ChevronRight size={14} className="hidden lg:inline opacity-60" />
           </button>
@@ -815,31 +834,16 @@ export default function App() {
           </button>
 
           <button
-            onClick={() => setActiveTab('events')}
+            onClick={() => setActiveTab('stats_events')}
             className={`w-full py-2.5 px-3.5 rounded-xl text-xs font-bold tracking-wide transition-all flex items-center justify-between cursor-pointer shrink-0 lg:shrink border ${
-              activeTab === 'events'
-                ? 'bg-pink-950/20 text-pink-400 border-pink-500/20 font-black'
-                : 'bg-slate-900/10 text-slate-400 border-transparent hover:text-slate-200 hover:bg-slate-900/30'
-            }`}
-          >
-            <span className="flex items-center gap-2">
-              <BellRing size={15} />
-              Eventos Cósmicos
-            </span>
-            <ChevronRight size={14} className="hidden lg:inline opacity-60" />
-          </button>
-
-          <button
-            onClick={() => setActiveTab('stats')}
-            className={`w-full py-2.5 px-3.5 rounded-xl text-xs font-bold tracking-wide transition-all flex items-center justify-between cursor-pointer shrink-0 lg:shrink border ${
-              activeTab === 'stats'
+              activeTab === 'stats_events'
                 ? 'bg-amber-950/20 text-amber-400 border-amber-500/20 font-black'
                 : 'bg-slate-900/10 text-slate-400 border-transparent hover:text-slate-200 hover:bg-slate-900/30'
             }`}
           >
             <span className="flex items-center gap-2">
               <Trophy size={15} />
-              Estatísticas
+              Métricas & Eventos
             </span>
             <ChevronRight size={14} className="hidden lg:inline opacity-60" />
           </button>
@@ -847,7 +851,7 @@ export default function App() {
         </nav>
 
         {/* WORKSTAGE VIEWPORT */}
-        <div className="flex-1 min-w-0" id="game-active-viewport">
+        <div className="flex-1 min-w-0 h-full lg:overflow-hidden" id="game-active-viewport">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
@@ -855,6 +859,7 @@ export default function App() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.15 }}
+              className="h-full"
             >
               {renderTabContent()}
             </motion.div>

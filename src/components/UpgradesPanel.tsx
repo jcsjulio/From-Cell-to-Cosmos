@@ -64,7 +64,7 @@ export function UpgradesPanel({ state, onBuyUpgrade }: UpgradesPanelProps) {
             Nenhuma melhoria disponível nesta Era. Tente expandir suas colônias para revelar segredos!
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3">
             {availableUpgrades.map((u) => {
               const revealed = isRevealed(u);
               const canAfford = currency.balance >= u.cost && revealed;
@@ -94,10 +94,10 @@ export function UpgradesPanel({ state, onBuyUpgrade }: UpgradesPanelProps) {
                 <motion.div
                   key={u.id}
                   whileHover={{ y: -1 }}
-                  className={`bg-slate-950/70 border rounded-xl p-4 flex flex-col justify-between transition-all duration-300 shadow-sm ${
+                  className={`border rounded-xl p-4 flex flex-col justify-between transition-all duration-300 shadow-sm ${
                     canAfford 
-                      ? 'border-slate-800 hover:border-slate-700' 
-                      : 'border-slate-900/40'
+                      ? 'bg-slate-900/40 border-slate-800 hover:border-amber-500/30 hover:bg-slate-900/60 shadow-[0_4px_20px_rgba(245,158,11,0.02)]' 
+                      : 'bg-slate-950/50 border-slate-900/50 opacity-90'
                   }`}
                 >
                   <div className="flex gap-3 items-start mb-3">
@@ -146,7 +146,7 @@ export function UpgradesPanel({ state, onBuyUpgrade }: UpgradesPanelProps) {
             <Award size={13} className="text-emerald-500/60" />
             Melhorias Ativas ({purchasedUpgrades.length})
           </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
+          <div className="grid grid-cols-2 gap-2">
             {purchasedUpgrades.map((u) => (
               <div 
                 key={u.id}

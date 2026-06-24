@@ -195,10 +195,10 @@ export function MainGamePanel({
   };
 
   return (
-    <div className="w-full flex flex-col items-center select-none" id="main-clicking-module">
+    <div className="w-full h-full flex flex-col items-center select-none" id="main-clicking-module">
       
       {/* HUD Header Toolbar */}
-      <div className="w-full flex justify-between items-center bg-slate-900/60 border border-slate-800 rounded-xl p-3 mb-4 backdrop-blur-md">
+      <div className="w-full flex justify-between items-center bg-slate-900/60 border border-slate-800 rounded-xl p-3 mb-4 backdrop-blur-md shrink-0">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
           <span className="text-xs font-mono text-slate-400 tracking-wide uppercase">Core Síncrono Conectado</span>
@@ -238,7 +238,7 @@ export function MainGamePanel({
       </div>
 
       {/* Main Clicking Sphere Card */}
-      <div className={`w-full max-w-md bg-slate-950/80 border rounded-2xl p-6 flex flex-col items-center relative overflow-hidden transition-all duration-300 shadow-xl ${getEraColorTheme()}`}>
+      <div className={`w-full flex-1 bg-slate-950/80 border rounded-2xl p-6 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 shadow-xl ${getEraColorTheme()}`}>
         
         {/* Glow behind */}
         <div className={`absolute w-72 h-72 rounded-full blur-[80px] -z-10 opacity-20 transition-all duration-500 ${
