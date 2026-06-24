@@ -13,8 +13,8 @@ export default defineConfig(() => {
       },
     },
     build: {
-      outDir: 'docs', // Build to 'docs' directory for native GitHub Pages support
-      emptyOutDir: false, // Prevent deleting .nojekyll or other manual files in docs
+      outDir: 'dist', // Build to 'dist' directory for AI Studio preview hosting support
+      emptyOutDir: true,
     },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
