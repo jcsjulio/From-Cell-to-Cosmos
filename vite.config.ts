@@ -5,11 +5,16 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    base: './', // Use relative paths for flexible GitHub Pages subpath deployment
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
       },
+    },
+    build: {
+      outDir: 'docs', // Build to 'docs' directory for native GitHub Pages support
+      emptyOutDir: false, // Prevent deleting .nojekyll or other manual files in docs
     },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
