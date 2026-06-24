@@ -328,32 +328,32 @@ export default function App() {
           }
           break;
         case EraId.MULTICELLULAR:
-          if (prev.nutrients >= totalCost) {
-            next.nutrients -= totalCost;
-            hasFunds = true;
-          }
-          break;
-        case EraId.ECOSYSTEM:
           if (prev.biomass >= totalCost) {
             next.biomass -= totalCost;
             hasFunds = true;
           }
           break;
-        case EraId.CIVILIZATION:
+        case EraId.ECOSYSTEM:
           if (prev.vitalForce >= totalCost) {
             next.vitalForce -= totalCost;
             hasFunds = true;
           }
           break;
-        case EraId.COSMIC_COLONIZATION:
+        case EraId.CIVILIZATION:
           if (prev.intelligence >= totalCost) {
             next.intelligence -= totalCost;
             hasFunds = true;
           }
           break;
-        case EraId.LIVING_COSMOS:
+        case EraId.COSMIC_COLONIZATION:
           if (prev.cosmicEnergy >= totalCost) {
             next.cosmicEnergy -= totalCost;
+            hasFunds = true;
+          }
+          break;
+        case EraId.LIVING_COSMOS:
+          if (prev.universalConsciousness >= totalCost) {
+            next.universalConsciousness -= totalCost;
             hasFunds = true;
           }
           break;
@@ -511,7 +511,8 @@ export default function App() {
 
   // Prestige Reset ("Extincao Controlada")
   const handlePrestige = () => {
-    const pendingGens = calculateGensEarned(state.lifetimeNutrients);
+    const totalGensQualifying = calculateGensEarned(state.lifetimeNutrients);
+    const pendingGens = Math.max(0, totalGensQualifying - state.stats.totalGensEarned);
     if (pendingGens === 0) return;
 
     setState(prev => {

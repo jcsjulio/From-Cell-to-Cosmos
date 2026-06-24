@@ -25,7 +25,8 @@ export function PrestigePanel({
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   // Calculate potential gens waiting to be collected
-  const pendingGens = calculateGensEarned(state.lifetimeNutrients);
+  const totalGensQualifying = calculateGensEarned(state.lifetimeNutrients);
+  const pendingGens = Math.max(0, totalGensQualifying - state.stats.totalGensEarned);
 
   // Helper to calculate current cost of a permanent upgrade based on level purchased
   const getPermUpgradeCost = (upgrade: PermanentUpgrade) => {
